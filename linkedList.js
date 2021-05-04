@@ -17,7 +17,7 @@ class LinkedList {
     // increase size by 1
     this.size += 1;
 
-    // Create a new node
+    // Create a new node and asign the next to the current head
     const node = new Node(value, this.head);
 
     // assign new node to head
@@ -56,23 +56,12 @@ class LinkedList {
   }
 
   // convert all the values in linked list to an array
-  toArray() {
-    // start a new array with just the head value
-    var array = [this.head.value];
+  toArray(current = this.head, array = []) {
+    if (!current) return array;
 
-    // loop thur each .next till null and rewrite the head to be able to grab the next value
-    while (this.head.next !== null) {
-      this.head = this.head.next;
-      array.push(this.head.value);
-    }
+    array.push(current.value);
 
-    // rebuild the LinkedList from the de-construction of the while loop
-    this.head = null;
-    this.tail = null;
-    this.fromArray(array);
-
-    // return the array to use it
-    return array;
+    return this.toArray(current.next, array);
   }
 
   delete() {}
@@ -92,9 +81,18 @@ class LinkedList {
 
   deleteTail() {}
 
-  includes() {}
+  includes(value) {
+    const array = this.toArray();
+    console.log(array.includes(value));
+  }
 
-  find() {}
+  find(value) {
+    const array = this.toArray();
+    const find = array.find((e) => e === value);
+
+    if (find) console.log(`Found: ${value}`);
+    if (!find) console.log(`Not Found: ${value}`);
+  }
 
   replace() {}
 
@@ -106,7 +104,7 @@ class LinkedList {
 
 // Daniel is cool but Lance is not
 
-const testArray = ["Daniel", "is", "cool", "but", "Lance", "is", "not"];
+const testArray = ["Daniel", "is", "cool", "but", "Turd Ferguson", "is", "not"];
 
 let newLinkedList = new LinkedList();
 newLinkedList.fromArray(testArray);
@@ -115,3 +113,5 @@ newLinkedList.deleteHead();
 newLinkedList.print();
 newLinkedList.prepend("Naz");
 newLinkedList.print();
+newLinkedList.find("Turd Ferguson");
+newLinkedList.find("James");
