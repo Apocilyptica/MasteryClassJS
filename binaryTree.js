@@ -46,6 +46,19 @@ class BinarySearchTree {
     return this.print(`Binary Search with inserted value of ${value} re-balanced`);
   }
 
+  delete(value, array = this.sortArray()) {
+    if (array.find((e) => e === value)) {
+      --this.nodes;
+      const index = array.indexOf(value);
+      if (index > -1) {
+        array.splice(index, 1);
+      }
+      this.balance(array);
+      return this.print(`Binary Search with deleted value of ${value} re-balanced`);
+    }
+    return this.print(`node value of ${value} does not exist`);
+  }
+
   balance(array = this.sortArray()) {
     if (array.length === 1) return new Node(array[0]);
     if (array.length === 0) return null;
@@ -147,7 +160,6 @@ BST.add(-3);
 BST.add(-25);
 
 BST.print(BST.balance());
-BST.print(BST);
 
 BST.insert(105);
 
@@ -158,3 +170,9 @@ BST.insert(105);
 var array = [];
 
 BST.addFromArray(array);
+BST.print(BST.toArray());
+
+BST.delete(105);
+BST.print(BST.toArray());
+
+BST.print(BST);
